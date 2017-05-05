@@ -1,5 +1,6 @@
 #require success.js
 
+//存储数据需要的结构
 var quantity=4;
 function sample(answer, score) 
 {
@@ -7,7 +8,7 @@ function sample(answer, score)
 	this.score=score;
     this.p=0;
 	
-	this.probabilistic()
+	this.probabilistic=function()
 	{this.p=this.score/quantity;}
 }
 
@@ -16,16 +17,16 @@ function question()
 	this.forecast=[];
 	this.maxOption=[];
 	
-	this.updata(answer,probability)
+	this.updata=function(answer,probability)
 	{this.forecast[answer]=probability;}
 	
-	this.getmaxOption()
+	this.getmaxOption=function()
 	{
 		var maxval=Math.max.apply(null,this.forecast);
 		var maxOption=[];
 		function pushOption(option)
 		{
-			if(forecast[option]==maxval)
+			if(this.forecast[option]==maxval)
 				maxOption.push(option);
 		}
 		pushOption("A");
@@ -34,6 +35,9 @@ function question()
 		pushOption("D");
 		this.maxOption=maxOption;
 	}
+
+    this.delete=function (option)
+    {delete this.forecast[option];} //只置undefine
 }
 
 function loss(predictionAnswer)
@@ -67,7 +71,8 @@ var allsam=[new sample(["A","B","C","D"],2),
 			new sample(["B","B","B","D"],2)];
 for(var i in allsam)
 {i.probabilistic();}
-var predictionResults=initObject(quantity); //以题目数量创建预测对象 
+var predictionResults=initObject(quantity); //以题目数量创建预测对象
+
 //开始预测（概率计算部分）
 function getProbability(sam,quesNO,option)
 {
@@ -110,12 +115,12 @@ function stru()
 	this.updata(predictionAnswer,lossval)
 	{this.predictionAnswerArr[predictionAnswer]=lossval;}
 	
-	this.getminAnswer()
+	this.getminAnswer=function ()
 	{
 		var minval=Math.min.apply(null,this.predictionAnswerArr);
-		for(var predictionAnswer in predictionAnswerArr)
+		for(var predictionAnswer in this.predictionAnswerArr)
 		{ 
-            if(predictionAnswerArr[predictionAnswer]==minval)
+            if(this.predictionAnswerArr[predictionAnswer]==minval)
 				return predictionAnswer; //用某个损失函数值最小的预测结果进行后续的离散优化
         }
 	}
@@ -141,5 +146,24 @@ function recursiveTest(quesNO)
 	}
 }
 recursiveTest(0);
-predictionAnswer=combination.getMinAnswer(); //任取一个损失函数值最小的进行后续的离散优化
+predictionAnswer=combination.getminAnswer(); //任取一个损失函数值最小的进行后续的离散优化
+function deleteArgument(predictionResults,predictionAnswer)
+{
+    //由于该问题不同维度不存在组合影响loss值，所以进行下一次迭代不会再移动到曾经所在所在过的位置。故可以用此函数删除曾经的位置以减小搜索空间
+    for(var i=0;i<quantity;i++)
+    {predictionResults[i].delete(predictionAnswer[i]);}
+}
+deleteArgument(predictionAnswer);
 //继续预测（归纳覆盖部分）
+function discreteOptimization(predictionAnswer)
+{
+	//本问题loss实际自变量为predictionAnswer，有quantity个维度
+	//计算每个维度变化的loss值移动大小，向误差减小最多的方向前进一步
+	var prelossval=loss(predictionAnswer);
+	var delta=[];
+	for(var i=0;i<quantity;i++)
+	{
+		var newPA=predictionAnswer.copy();
+
+	}
+}
