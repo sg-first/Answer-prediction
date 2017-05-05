@@ -3,9 +3,10 @@ function sample(answer, score)
 {
     this.answer=answer;
 	this.score=score;
+    this.p=0;
 	
 	this.probabilistic()
-	{this.score=this.score/quantity;}
+	{this.p=this.score/quantity;}
 }
 
 function question()
@@ -33,6 +34,22 @@ function question()
 	}
 }
 
+function loss(allsam,predictionAnswer)
+{
+	var lossval=0;
+    for(var sam in allsam)
+    {
+        var score=0;
+        for(var i=0;i<quantity;i++)
+        {
+            if (sam.answer[i] == predictionAnswer[i])
+                score++;
+        }
+        lossval+=Math.abs(sam.score-score);
+    }
+    return lossval;
+}
+
 function initObject(quantity) //创建预测对象
 {
 	var predictionResults=[];
@@ -53,9 +70,9 @@ var predictionResults=initObject(quantity); //以题目数量创建预测对象
 function getProbability(sam,quesNO,option)
 {
 	if(sam.answer[quesNO]==option)
-	{return sam.score;}
+	{return sam.p;}
 	else
-	{return (1-sam.score)*(1/(4-1));}
+	{return (1-sam.p)*(1/(4-1));}
 }
 function predictionOption(quesNO,option) //返回某题某选项正确的概率
 {

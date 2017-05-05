@@ -25,8 +25,8 @@
       <file leaf-file-name="probability.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/probability.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="110" column="35" selection-start-line="110" selection-start-column="35" selection-end-line="110" selection-end-column="35" />
+            <state relative-caret-position="567">
+              <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -107,6 +107,32 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
+  <component name="RunManager">
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
+      <BehatRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+  </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
@@ -117,12 +143,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1493993378239</updated>
-      <workItem from="1493993385237" duration="460000" />
+      <workItem from="1493993385237" duration="1044000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="460000" />
+    <option name="totallyTimeSpent" value="1044000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="242" y="49" width="1749" height="975" extended-state="0" />
@@ -157,8 +183,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/probability.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="110" column="35" selection-start-line="110" selection-start-column="35" selection-end-line="110" selection-end-column="35" />
+        <state relative-caret-position="567">
+          <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
           <folding />
         </state>
       </provider>
