@@ -1,3 +1,5 @@
+#require success.js
+
 var quantity=4;
 function sample(answer, score) 
 {
@@ -34,7 +36,7 @@ function question()
 	}
 }
 
-function loss(allsam,predictionAnswer)
+function loss(predictionAnswer)
 {
 	var lossval=0;
     for(var sam in allsam)
