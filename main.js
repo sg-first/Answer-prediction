@@ -1,4 +1,5 @@
 #require success.js
+#require help.js
 
 //存储数据需要的结构
 var quantity=4;
@@ -18,26 +19,19 @@ function question()
 	this.maxOption=[];
 	
 	this.updata=function(answer,probability)
-	{this.forecast[answer]=probability;}
+	{this.forecast[answer]=probability;};
 	
 	this.getmaxOption=function()
-	{
-		var maxval=Math.max.apply(null,this.forecast);
-		var maxOption=[];
-		function pushOption(option)
-		{
-			if(this.forecast[option]==maxval)
-				maxOption.push(option);
-		}
-		pushOption("A");
-		pushOption("B");
-		pushOption("C");
-		pushOption("D");
-		this.maxOption=maxOption;
-	}
+	{this.maxOption=maxkey(this.forecast);};
 
-    this.delete=function (option)
-    {delete this.forecast[option];} //只置undefine
+    this.clear=function (option)
+    {delete this.forecast[option];}; //只置undefine
+
+	this.getaOption=function ()
+    {
+        this.getmaxOption();
+        return this.maxOption[0];
+    };
 }
 
 function loss(predictionAnswer)
@@ -88,7 +82,7 @@ function predictionOption(quesNO,option) //返回某题某选项正确的概率
 	for(var i=1;i<allsam.length;i++)
 	{
 		var exchangeProbability=getProbability(allsam[i],quesNO,option);
-		probability=probability*exchangeProbability/components; //通过贝叶斯定理变形计算
+		probability=probability*exchangeProbability/compensate; //通过贝叶斯定理变形计算
 	}
 	return probability;
 }
@@ -112,18 +106,11 @@ function stru()
 {
 	this.predictionAnswerArr=[];
 	
-	this.updata(predictionAnswer,lossval)
-	{this.predictionAnswerArr[predictionAnswer]=lossval;}
+	this.updata=function(predictionAnswer,lossval)
+	{this.predictionAnswerArr[predictionAnswer]=lossval;};
 	
 	this.getminAnswer=function ()
-	{
-		var minval=Math.min.apply(null,this.predictionAnswerArr);
-		for(var predictionAnswer in this.predictionAnswerArr)
-		{ 
-            if(this.predictionAnswerArr[predictionAnswer]==minval)
-				return predictionAnswer; //用某个损失函数值最小的预测结果进行后续的离散优化
-        }
-	}
+	{return minkey(this.predictionAnswerArr)[0];};  //用某个损失函数值最小的预测结果进行后续的离散优化
 }
 var combination=new stru();//所有组合的损失函数值暂存于此
 function recursiveTest(quesNO)
@@ -151,7 +138,7 @@ function deleteArgument(predictionResults,predictionAnswer)
 {
     //由于该问题不同维度不存在组合影响loss值，所以进行下一次迭代不会再移动到曾经所在所在过的位置。故可以用此函数删除曾经的位置以减小搜索空间
     for(var i=0;i<quantity;i++)
-    {predictionResults[i].delete(predictionAnswer[i]);}
+    {predictionResults[i].clear(predictionAnswer[i]);}
 }
 deleteArgument(predictionAnswer);
 //继续预测（归纳覆盖部分）
@@ -164,6 +151,16 @@ function discreteOptimization(predictionAnswer)
 	for(var i=0;i<quantity;i++)
 	{
 		var newPA=predictionAnswer.copy();
-
+        newPA[i]=predictionResults[i].getaOption();
+        delta[i]=loss(newPA)-prelossval; //末减初为变化量
 	}
+    var direction=minsub(delta)[0];
+    predictionAnswer[i]=predictionAnswer[i].getaOption(); //前进一步
+    deleteArgument(predictionAnswer); //在备选位置中删除前进到的位置
+}
+while (1)
+{
+    discreteOptimization(predictionAnswer);
+    if(loss(predictionAnswer)==0)
+        success(predictionAnswer);
 }
