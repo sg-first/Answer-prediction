@@ -7,10 +7,7 @@ function sample(answer, score)
 {
     this.answer=answer;
 	this.score=score;
-    this.p=0;
-	
-	this.probabilistic=function()
-	{this.p=this.score/quantity;}
+    this.p=this.score/quantity;
 }
 
 function question()
@@ -63,8 +60,6 @@ var allsam=[new sample(["A","B","C","D"],2),
 			new sample(["A","A","A","A"],2),
 			new sample(["A","B","B","D"],3),
 			new sample(["B","B","B","D"],2)];
-for(var i in allsam)
-{i.probabilistic();}
 var predictionResults=initObject(quantity); //以题目数量创建预测对象
 
 //开始预测（概率计算部分）
