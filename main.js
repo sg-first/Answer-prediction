@@ -155,7 +155,7 @@ function discreteOptimization(predictionAnswer)
         delta[i]=loss(newPA)-prelossval; //末减初为变化量
 	}
     var direction=minsub(delta)[0];
-    predictionAnswer[i]=predictionAnswer[i].getaOption(); //前进一步
+    predictionAnswer[direction]=predictionAnswer[direction].getaOption(); //前进一步
     deleteArgument(predictionAnswer); //在备选位置中删除前进到的位置
 }
 while (1)
