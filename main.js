@@ -142,16 +142,17 @@ function discreteOptimization(predictionAnswer)
 	//本问题loss实际自变量为predictionAnswer，有quantity个维度
 	//计算每个维度变化的loss值移动大小，向误差减小最多的方向前进一步
 	var prelossval=loss(predictionAnswer);
-	var delta=[];
 	for(var i=0;i<quantity;i++)
 	{
 		var newPA=predictionAnswer.copy();
         newPA[i]=predictionResults[i].getaOption();
-        delta[i]=loss(newPA)-prelossval; //末减初为变化量
+        var delta=loss(newPA)-prelossval; //末减初为变化量
+		if(delta<0)
+        {
+            predictionAnswer=newPA; //前进一步
+            deleteArgument(predictionAnswer); //在备选位置中删除前进到的位置
+        }
 	}
-    var direction=minsub(delta)[0];
-    predictionAnswer[direction]=predictionAnswer[direction].getaOption(); //前进一步
-    deleteArgument(predictionAnswer); //在备选位置中删除前进到的位置
 }
 while (1)
 {
