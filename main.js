@@ -136,7 +136,7 @@ function deleteArgument(predictionResults,predictionAnswer)
     {predictionResults[i].clear(predictionAnswer[i]);}
 }
 deleteArgument(predictionAnswer);
-//继续预测（归纳覆盖部分）
+//继续预测（离散优化部分）
 function discreteOptimization(predictionAnswer)
 {
 	//本问题loss实际自变量为predictionAnswer，有quantity个维度
